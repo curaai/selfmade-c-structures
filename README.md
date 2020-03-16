@@ -5,3 +5,4 @@
 ## Implemented List
 
 - LinkedList 
+- Stack
