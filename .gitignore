@@ -417,5 +417,5 @@ MigrationBackup/
 
 .vscode/
 build/
+extern/googletest
 !extern/googletest/.gitignore
-extern/googletest/
