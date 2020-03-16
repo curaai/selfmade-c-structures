@@ -1,4 +1,5 @@
 #include "linkedlist.h"
+#include <stdexcept>
 
 
 Element::Element(int item, Element* prev)
@@ -62,6 +63,12 @@ Element* LinkedList::get(int idx)
 
 void LinkedList::remove(int idx)
 {
+    if(0 > idx || idx > length-1)
+        throw std::invalid_argument("Index Error");
+    if(idx == length-1)
+        tail = tail->prev;
+    if(idx == 0)
+        head = nullptr;
     delete get(idx);
     length--; 
 }
