@@ -67,8 +67,10 @@ void LinkedList::remove(int idx)
         throw std::invalid_argument("Index Error");
     if(idx == length-1)
         tail = tail->prev;
-    if(idx == 0)
-        head = nullptr;
-    delete get(idx);
+    auto item = get(idx);
+    if(idx == 0) {
+        head = item->next;
+    }
+    delete item;
     length--; 
 }
