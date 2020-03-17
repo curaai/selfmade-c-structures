@@ -4,5 +4,7 @@
 
 ## Implemented List
 
-- LinkedList 
+- LinkedList
 - Stack
+- Queue
+- Set
