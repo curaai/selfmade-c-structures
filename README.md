@@ -8,3 +8,4 @@
 - Stack
 - Queue
 - Set
+- ChainHashTable
