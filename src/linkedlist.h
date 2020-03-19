@@ -1,30 +1,82 @@
 #pragma once
 
+#include <stdexcept>
+
+
+template<typename T>
 class Element
 {
 public:
-    Element(int item, Element* prev);
-    Element(int item, Element* prev, Element* next);
-    ~Element();
+    Element(T item, Element<T>* prev)
+        : Element(item, prev, nullptr) {}
+    Element(T item, Element<T>* prev, Element<T>* next)
+        : item(item), prev(prev), next(next)
+    {
+        if(prev)
+            prev->next = this;
+        if(next)
+            next->prev = this;
+    }
+    ~Element()
+    {
+        if(prev)
+            prev->next = next;
+        if(next)
+            next->prev = prev;
+    }
 
 public:
-    int item; 
-    Element* prev=nullptr;
-    Element* next=nullptr;
+    T item; 
+    Element<T>* prev=nullptr;
+    Element<T>* next=nullptr;
 };
 
+template<typename T>
 class LinkedList
 {
 public:
-    LinkedList();
-    ~LinkedList();
+    LinkedList(){};
+    ~LinkedList()
+    {
+        while(head) {
+            Element<T>* x = head->next;
+            delete head;
+            head = x;
+        }
+    }
 
-    void add(int item);
-    Element* get(int idx);
-    void remove(int idx);
+    void add(T item)
+    {
+        tail = new Element<T> {item, tail};
+        if(head == nullptr)
+            head = tail;
+        length++;
+    }
+    Element<T>* get(int idx)
+    {
+        int cnt = 0;
+        Element<T>* tElement = head;
+        while(idx != cnt++) 
+            tElement = tElement->next;
+        
+        return tElement;
+    }
+    void remove(int idx)
+    {
+        if(0 > idx || idx > length-1)
+            throw std::invalid_argument("Index Error");
+        if(idx == length-1)
+            tail = tail->prev;
+        auto item = get(idx);
+        if(idx == 0) {
+            head = item->next;
+        }
+        delete item;
+        length--; 
+    }
 
 public:
-    Element* head=nullptr;
-    Element* tail=nullptr;
+    Element<T>* head=nullptr;
+    Element<T>* tail=nullptr;
     int length=0;
 };

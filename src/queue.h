@@ -15,5 +15,5 @@ public:
 
 
 private:
-    LinkedList list;
+    LinkedList<int> list;
 };

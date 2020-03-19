@@ -3,7 +3,7 @@
 #include <stdexcept>
 
 
-Set::Set(LinkedList& list)
+Set::Set(LinkedList<int>& list)
 {
     for(int i=0; i<list.length; i++)
         add(list.get(i)->item);
@@ -43,9 +43,9 @@ bool Set::contain(int x)
     return false;
 }
 
-LinkedList* Set::toList(void)
+LinkedList<int>* Set::toList(void)
 {
-    auto data = new LinkedList;
+    auto data = new LinkedList<int>;
     for(int i=0; i<list.length; i++)
         data->add(list.get(i)->item);
     return data;
@@ -53,7 +53,7 @@ LinkedList* Set::toList(void)
 
 Set Set::operator&(Set& set) 
 {
-    LinkedList data;
+    LinkedList<int> data;
     for(int i=0; i<list.length; i++) {
         auto var = list.get(i)->item;
         if(set.contain(var))
@@ -65,7 +65,7 @@ Set Set::operator&(Set& set)
 
 Set Set::operator|(Set& set) 
 {
-    LinkedList data;
+    LinkedList <int>data;
     for(int i=0; i<list.length; i++) {
         data.add(list.get(i)->item);
     }
@@ -81,7 +81,7 @@ Set Set::operator|(Set& set)
 
 Set Set::operator-(Set& set) 
 {
-    LinkedList data;
+    LinkedList<int> data;
     for(int i=0; i<list.length; i++) {
         auto var = list.get(i)->item;
         if(!set.contain(var))

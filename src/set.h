@@ -8,7 +8,7 @@ class Set
 {
 public:
     Set(){};
-    Set(LinkedList& list);
+    Set(LinkedList<int>& list);
     Set(std::initializer_list<int> vec);
     ~Set(){};
 
@@ -17,7 +17,7 @@ public:
     bool contain(int x);
     int getSize(void) { return list.length; }
     bool isEmpty(void) { return static_cast<bool>(list.length); }
-    LinkedList* toList(void); 
+    LinkedList<int>* toList(void); 
 
     Set operator&(Set& set);
     Set operator|(Set& set);
@@ -26,5 +26,5 @@ public:
     bool operator<(Set& set); 
     
 private:
-    LinkedList list;
+    LinkedList<int> list;
 };

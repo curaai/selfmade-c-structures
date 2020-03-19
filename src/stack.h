@@ -12,5 +12,5 @@ public:
     const int getSize(void) { return list.length; }
 
 private:
-    LinkedList list;
+    LinkedList<int> list;
 };
