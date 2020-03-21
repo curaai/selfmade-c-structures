@@ -3,10 +3,12 @@
 #include "linkedlist.h"
 
 
+template <typename T> class BinaryTree;
+
 template <typename T>
 class Node
 {
-friend class BinaryTree
+friend class BinaryTree<T>;
 private:
     Node(T item, Node<T>* left, Node<T>* right)
         : item(item), left(left), right(right) {}
@@ -15,7 +17,7 @@ private:
     }
 public:
     Node<T>* getLeft(void) { return left; }
-    Node<T>* getLeft(void) { return left; }
+    Node<T>* getRight(void) { return right; }
     bool isLeaf(void) {return left == nullptr && right == nullptr; }
 public:
     T item;
@@ -30,6 +32,7 @@ using node = Node<T>*;
 template <typename T>
 class BinaryTree
 {
+public:
     BinaryTree(T data) {
         root = new Node<T>(data, nullptr, nullptr);
     }
@@ -37,7 +40,7 @@ class BinaryTree
         remove(root);
     }
 
-    static void remove(node l)
+    void remove(Node<T>* l)
     {
         if(l == nullptr)
             return;
@@ -49,21 +52,21 @@ class BinaryTree
         count--;
     }
 
-    void rmLeft(node n)
+    void rmLeft(Node<T>* n)
     {
         auto left = n->getLeft();
         if(left != nullptr)
             remove(left);
     }
 
-    void rmRight(node n)
+    void rmRight(Node<T>* n)
     {
         auto right = n->getRight();
         if(right != nullptr)
             remove(right);
     }
 
-    void merge(node n, node left, node right)
+    void merge(Node<T>* n, Node<T>* left, Node<T>* right)
     {
         if(left->isLeaf() && right->isLeaf()) {
             n->left = left;
@@ -71,13 +74,13 @@ class BinaryTree
         }
     }
 
-    node setLeft(node n, T data)
+    Node<T>* setLeft(Node<T>* n, T data)
     {
         n->left = new Node<T> (data, nullptr, nullptr);
         count++;
         return n->getLeft();
     }
-    node setRight(node n, T data)
+    Node<T>* setRight(Node<T>* n, T data)
     {
         n->right = new Node<T> (data, nullptr, nullptr);
         count++;
@@ -86,45 +89,51 @@ class BinaryTree
 
     LinkedList<T>* preorder(void)
     {
-        auto go = [](node n, LinkedList<T>* t) {
+        std::function<void(Node<T>* n, LinkedList<T>* t)> go;
+        go = [&go](Node<T>* n, LinkedList<T>* t) -> void
+        {
             if(n != nullptr) {
                 t->add(n->item);
                 go(n->left, t);
                 go(n->right, t);
             }
-        }
+        };
         auto list = new LinkedList<T>;
         go(root, list);
         return list;
     }
     LinkedList<T>* inorder(void)
     {
-        auto go = [](node n, LinkedList<T>* t) {
+        std::function<void(Node<T>* n, LinkedList<T>* t)> go;
+        go = [&go](Node<T>* n, LinkedList<T>* t) -> void
+        {
             if(n != nullptr) {
                 go(n->left, t);
                 t->add(n->item);
                 go(n->right, t);
             }
-        }
+        };
         auto list = new LinkedList<T>;
         go(root, list);
         return list;
     }
     LinkedList<T>* postorder(void)
     {
-        auto go = [](node n, LinkedList<T>* t) {
+        std::function<void(Node<T>* n, LinkedList<T>* t)> go;
+        go = [&go](Node<T>* n, LinkedList<T>* t) -> void
+        {
             if(n != nullptr) {
                 go(n->left, t);
                 go(n->right, t);
                 t->add(n->item);
             }
-        }
+        };
         auto list = new LinkedList<T>;
         go(root, list);
         return list;
     }
 
 public:
-    node root;
+    Node<T>* root;
     int count=0;
 };

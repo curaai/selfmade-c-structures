@@ -15,18 +15,21 @@ protected:
 
 TEST_F(SetTest, union) {
     auto unionSet = a | b;
-    auto res = unionSet == Set({1, 2, 3, 4, 5, 6});
+    auto testData = Set({1, 2, 3, 4, 5, 6});
+    auto res = unionSet ==  testData;
     EXPECT_EQ(res, true);
 }
 
 TEST_F(SetTest, intersection) {
-    bool res = Set({1, 3}) == (a & c);
+    auto testData = (a & c);
+    bool res = Set({1, 3}) == testData;
     EXPECT_EQ(res, true);
 }
 
 TEST_F(SetTest, difference) {
     Set diff ({5});
-    EXPECT_EQ(diff == (a - c), true);
+    auto testData = (a - c);
+    EXPECT_EQ(diff == testData, true);
 }
 
 TEST_F(SetTest, subset) {

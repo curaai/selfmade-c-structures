@@ -9,3 +9,4 @@
 - Queue
 - Set
 - ChainHashTable
+- BinaryTree
