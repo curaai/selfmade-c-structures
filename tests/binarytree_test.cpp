@@ -1,4 +1,3 @@
-
 #include <gtest/gtest.h>
 #include "../src/binarytree.h"
 
@@ -30,7 +29,7 @@ protected:
     }
 
 protected:
-    BinaryTree<int> tree;
+    BinaryTree<Node, int> tree;
 };
 
 TEST_F(BinaryTreeTest, preorder) {
