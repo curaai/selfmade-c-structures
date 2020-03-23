@@ -26,8 +26,8 @@ public:
             if(left != nullptr)
                 leftH = left->height();
             if(right != nullptr)
-                rightH = left->height();
-            int h = leftH >= right ? leftH : rightH;
+                rightH = right->height();
+            int h = leftH >= rightH ? leftH : rightH;
             return h+1;
         }
     }
@@ -159,6 +159,6 @@ public:
     }
 
 public:
-    N<T>* root;
+    N<T>* root=nullptr;
     int count=0;
 };
