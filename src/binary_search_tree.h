@@ -8,15 +8,15 @@ class SearchNode : public Node<T>
 public:
     SearchNode(T item, Node<T>* left, Node<T>* right)
         : Node(item, left, right)
-        , factor(0)
     {
     }
     ~SearchNode()
     {
     }
 public:
-    void balancing(void)
+    int getFactor(void)
     {
+        int factor = 0;
         if(isLeaf())
             factor = 0;
         else
@@ -29,11 +29,8 @@ public:
                 rightH = right->height();
             factor = leftH - rightH;
         }
+        return factor;
     }
-
-public:
-    // balanced factor
-    int factor;
 };
 
 template <typename T>
@@ -68,14 +65,7 @@ public:
             }
         };
         go(root, data);
-        updateFactors();
-        auto inbNode = findInbalance();
-        if(!inbNode)
-            return;
-        if(1 < inbNode->factor)
-        {
-            // llRotation(inbNode);
-        }
+        root = balancing(root);
     }
     void remove(T data)
     {
@@ -100,38 +90,50 @@ public:
         };
         go(root, data);
     }
-    void updateFactors(void)
+    SearchNode<T>* balancing(SearchNode<T>* root)
     {
-        std::function<void(SearchNode<T>* n)> go;
-        go = [&go](SearchNode<T>* n) -> void
-        {
-            n->balancing();
-            if(n->left)
-                castToNode(n->left)->balancing();
-            if(n->right)
-                castToNode(n->right)->balancing();
-        };
-        go(castToNode(root));
-    }
-    SearchNode<T>* findInbalance(void)
-    {
-        std::function<SearchNode<T>* (SearchNode<T>* n)> go;
-        go = [&go](SearchNode<T>* n) -> SearchNode<T>* 
-        {
-            if(n->factor < -1 || 1 < n->factor)
-                return n;
+        if(root == nullptr)
+            return nullptr;
 
-            SearchNode<T>* l=castToNode(n->left);
-            SearchNode<T>* r=castToNode(n->right);
-            SearchNode<T>* leftRes = nullptr;
-            SearchNode<T>* rightRes = nullptr;
-            if(l)
-                leftRes = go(l);
-            if(r)
-                rightRes = go(r);
-            return leftRes ? leftRes : rightRes;
-        };
-        return go(castToNode(root));
+        root->left = balancing(castToNode(root->left));
+        root->right = balancing(castToNode(root->right));
+        int factor = root->getFactor();
+        if(-2 < factor && factor < 2)
+            return root;
+        // Left Rotation 
+        else if(2 <= factor) 
+            return castToNode(root->left)->getFactor() > 0 ? rotateLL(root) : rotateLR(root);
+        // Right Rotation
+        else if(factor <= -2)
+            return castToNode(root->right)->getFactor() < 0 ? rotateRR(root) : rotateRL(root);
+        return root;
+    }
+
+    static SearchNode<T>* rotateLL(SearchNode<T>* parent)
+    {
+        auto child = castToNode(parent->left);
+        parent->left = child->right;
+        child->right = parent;
+        return child;
+    }
+    static SearchNode<T>* rotateRR(SearchNode<T>* parent)
+    {
+        auto child = castToNode(parent->right);
+        parent->right = child->left;
+        child->left = parent;
+        return child;
+    }
+    static SearchNode<T>* rotateLR(SearchNode<T>* parent)
+    {
+        auto child = castToNode(parent->left);
+        parent->left = rotateRR(child);
+        return rotateLL(parent);
+    }
+    static SearchNode<T>* rotateRL(SearchNode<T>* parent)
+    {
+        auto child = castToNode(parent->right);
+        parent->right = rotateLL(child);
+        return rotateRR(parent);
     }
 public:
     static SearchNode<T>* castToNode(Node<T>* n)

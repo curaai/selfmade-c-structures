@@ -2,7 +2,7 @@
 
  Implement several basic structures with selfmade! on c/cpp
 
-## Implemented List
+## Implemented Structure List
 
 - LinkedList
 - Stack
@@ -10,3 +10,4 @@
 - Set
 - ChainHashTable
 - BinaryTree
+- AVL BinarySearchTree
