@@ -7,26 +7,26 @@ class SearchNode : public Node<T>
 {
 public:
     SearchNode(T item, Node<T>* left, Node<T>* right)
-        : Node(item, left, right)
+        : Node<T>(item, left, right)
     {
     }
     ~SearchNode()
     {
     }
-public:
+
     int getFactor(void)
     {
         int factor = 0;
-        if(isLeaf())
+        if(this->isLeaf())
             factor = 0;
         else
         {
             int leftH = -1;
             int rightH = -1;
-            if(left)
-                leftH = left->height();
-            if(right)
-                rightH = right->height();
+            if(this->left)
+                leftH = this->left->height();
+            if(this->right)
+                rightH = this->right->height();
             factor = leftH - rightH;
         }
         return factor;
@@ -38,14 +38,14 @@ class BinarySearchTree : public BinaryTree<SearchNode, T>
 {
 public:
     BinarySearchTree() {}
-    BinarySearchTree(T data) : BinaryTree(data) {}
-    BinarySearchTree(SearchNode<T>* subRoot) : BinaryTree(subRoot) {}
+    BinarySearchTree(T data) : BinaryTree<SearchNode, T>(data) {}
+    BinarySearchTree(SearchNode<T>* subRoot) : BinaryTree<SearchNode, T>(subRoot) {}
     ~BinarySearchTree() {}
 
     void insert(T data)
     {
-        if(!root) {
-            root = new SearchNode<T>(data, nullptr, nullptr);
+        if(!this->root) {
+            this->root = new SearchNode<T>(data, nullptr, nullptr);
             return ;
         }
 
@@ -54,18 +54,18 @@ public:
         {
             if(n->isLeaf())
             {
-                n->item > data ? setLeft(n, data) : setRight(n, data);
+                n->item > data ? this->setLeft(n, data) : this->setRight(n, data);
             }
             else {
                 SearchNode<T>* get = static_cast<SearchNode<T>*>(n->item > data ? n->left : n->right);
                 if(get) 
                     go(get, data);
                 else 
-                    n->item > data ? setLeft(n, data) : setRight(n, data);
+                    n->item > data ? this->setLeft(n, data) : this->setRight(n, data);
             }
         };
-        go(root, data);
-        root = balancing(root);
+        go(this->root, data);
+        this->root = balancing(this->root);
     }
     void remove(T data)
     {
@@ -88,7 +88,7 @@ public:
                     setFunc(n, data);
             }
         };
-        go(root, data);
+        go(this->root, data);
     }
     SearchNode<T>* balancing(SearchNode<T>* root)
     {
