@@ -20,13 +20,12 @@ protected:
 TEST_F(LinkedListTest, CheckElements) {
     const int cnt=6;
     for(int i=0; i<cnt; i++) {
-        auto element = list.get(i);
-        EXPECT_EQ(element->item, items[i]);
+        EXPECT_EQ(list.get(i), items[i]);
     }
 }
 
 TEST_F(LinkedListTest, RemoveElement) {
-    EXPECT_EQ(list.get(2)->item, 3);
+    EXPECT_EQ(list.get(2), 3);
     list.remove(2);
-    EXPECT_EQ(list.get(2)->item, 4);
+    EXPECT_EQ(list.get(2), 4);
 }

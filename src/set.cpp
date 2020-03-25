@@ -6,7 +6,7 @@
 Set::Set(LinkedList<int>& list)
 {
     for(int i=0; i<list.length; i++)
-        add(list.get(i)->item);
+        add(list.get(i));
 }
 
 Set::Set(std::initializer_list<int> vec)
@@ -26,7 +26,7 @@ void Set::remove(int x)
 {
     for(int i=0; i<list.length; i++) {
         auto var = list.get(i);
-        if(var->item == x) {
+        if(var == x) {
             list.remove(i);
             return;
         }
@@ -37,7 +37,7 @@ void Set::remove(int x)
 bool Set::contain(int x)
 {
     for(int i=0; i<list.length; i++) {
-        if(list.get(i)->item == x) 
+        if(list.get(i) == x) 
             return true;
     }
     return false;
@@ -47,7 +47,7 @@ LinkedList<int>* Set::toList(void)
 {
     auto data = new LinkedList<int>;
     for(int i=0; i<list.length; i++)
-        data->add(list.get(i)->item);
+        data->add(list.get(i));
     return data;
 }
 
@@ -55,7 +55,7 @@ Set Set::operator&(Set& set)
 {
     LinkedList<int> data;
     for(int i=0; i<list.length; i++) {
-        auto var = list.get(i)->item;
+        auto var = list.get(i);
         if(set.contain(var))
             data.add(var);
     }
@@ -67,12 +67,12 @@ Set Set::operator|(Set& set)
 {
     LinkedList <int>data;
     for(int i=0; i<list.length; i++) {
-        data.add(list.get(i)->item);
+        data.add(list.get(i));
     }
 
     auto tempList = set.toList();
     for(int i=0; i<tempList->length; i++) {
-        auto var = tempList->get(i)->item;
+        auto var = tempList->get(i);
         if(!contain(var))
             data.add(var);
     }
@@ -83,7 +83,7 @@ Set Set::operator-(Set& set)
 {
     LinkedList<int> data;
     for(int i=0; i<list.length; i++) {
-        auto var = list.get(i)->item;
+        auto var = list.get(i);
         if(!set.contain(var))
             data.add(var);
     }
@@ -100,7 +100,7 @@ bool Set::operator==(Set& set)
 bool Set::operator<(Set& set) 
 {
     for(int i=0; i<list.length; i++) {
-        auto var = list.get(i)->item;
+        auto var = list.get(i);
         if(!set.contain(var))
             return false;
     }

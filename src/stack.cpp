@@ -11,8 +11,7 @@ int Stack::pop(void)
     if(!list.length)
         throw std::length_error("Cannot popping on empty stack");
 
-    auto element = list.get(list.length-1);
-    int x = element->item;
+    int x = list.get(list.length-1);
     list.remove(list.length-1);
     return x; 
 }

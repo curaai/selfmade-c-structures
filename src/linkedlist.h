@@ -52,14 +52,14 @@ public:
             head = tail;
         length++;
     }
-    Element<T>* get(int idx)
+    T& get(int idx)
     {
         int cnt = 0;
         Element<T>* tElement = head;
         while(idx != cnt++) 
             tElement = tElement->next;
         
-        return tElement;
+        return tElement->item;
     }
     void remove(int idx)
     {
@@ -67,12 +67,23 @@ public:
             throw std::invalid_argument("Index Error");
         if(idx == length-1)
             tail = tail->prev;
-        auto item = get(idx);
+        auto item = getElement(idx);
         if(idx == 0) {
             head = item->next;
         }
         delete item;
         length--; 
+    }
+
+private:
+    Element<T>* getElement(int idx)
+    {
+        int cnt = 0;
+        Element<T>* tElement = head;
+        while(idx != cnt++) 
+            tElement = tElement->next;
+        
+        return tElement;
     }
 
 public:

@@ -36,7 +36,7 @@ TEST_F(BinaryTreeTest, preorder) {
     auto res = tree.preorder();
     int expectArr[9] = {1, 2, 4, 8, 9, 5, 3, 6, 7};
     for(int i=0; i<9; i++) {
-        EXPECT_EQ(res->get(i)->item, expectArr[i]);
+        EXPECT_EQ(res->get(i), expectArr[i]);
     }
 }
 
@@ -44,7 +44,7 @@ TEST_F(BinaryTreeTest, inorder) {
     auto res = tree.inorder();
     int expectArr[9] = {8, 4, 9, 2, 5, 1, 6, 3, 7};
     for(int i=0; i<9; i++) {
-        EXPECT_EQ(res->get(i)->item, expectArr[i]);
+        EXPECT_EQ(res->get(i), expectArr[i]);
     }
 }
 
@@ -52,6 +52,6 @@ TEST_F(BinaryTreeTest, postorder) {
     auto res = tree.postorder();
     int expectArr[9] = {8, 9, 4, 5, 2, 6, 7, 3, 1};
     for(int i=0; i<9; i++) {
-        EXPECT_EQ(res->get(i)->item, expectArr[i]);
+        EXPECT_EQ(res->get(i), expectArr[i]);
     }
 }

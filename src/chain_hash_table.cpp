@@ -6,7 +6,7 @@ int ChainHashTable::get(int k)
     if(bucket.idx == -1)
         throw std::invalid_argument("Can't find key");
     
-    return bucket.chain->get(bucket.idx)->item.value;
+    return bucket.chain->get(bucket.idx).value;
 }
 
 void ChainHashTable::insert(int k, int v)
@@ -31,7 +31,7 @@ Bucket ChainHashTable::find(int k)
     int code = hash(k);
     auto chain = &buckets[code];
     for(int i=0; i<chain->length; i++) {
-        TableItem item = chain->get(i)->item; 
+        TableItem item = chain->get(i); 
         if(k == item.key)
             return Bucket{chain, i};
     }
