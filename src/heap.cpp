@@ -7,10 +7,11 @@ void Heap::insert(int k)
     arr[max++] = k;
 
     int i=max-1;
-    int parent = static_cast<int>(i / 2);
+    int parent = i;
     
     while(arr[parent] != 0 && i > 1)
     {
+        parent = static_cast<int>(i / 2);
         if (arr[i] > arr[parent])
             swap(&arr[i], &arr[parent]);
         else

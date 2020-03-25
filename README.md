@@ -11,3 +11,4 @@
 - ChainHashTable
 - BinaryTree
 - AVL BinarySearchTree
+- Heap
